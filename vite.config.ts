@@ -224,6 +224,13 @@ export default defineConfig({
     port: 3000,
     strictPort: false, // Will find next available port if 3000 is busy
     host: true,
+    hmr: {
+      // The WebDev preview is served over HTTPS by a reverse proxy. Keep the
+      // browser-side HMR client on the public secure WebSocket port instead
+      // of advertising the container's localhost:3000 endpoint.
+      protocol: "wss",
+      clientPort: 443,
+    },
     allowedHosts: [
       ".manuspre.computer",
       ".manus.computer",

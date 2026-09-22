@@ -31,15 +31,17 @@ import {
   Settings2,
   ShieldCheck,
   Sparkles,
+  Star,
   Terminal as TerminalIcon,
   Trophy,
+  TreePine,
   UserRound,
   Wifi,
   X,
   Zap,
 } from "lucide-react";
 
-type AppId = "transcript" | "trophies" | "projects" | "terminal" | "notes" | "orbital";
+type AppId = "transcript" | "trophies" | "projects" | "ocw" | "terminal" | "notes" | "orbital";
 type WindowPosition = { left: number; top: number };
 type Apod = { title: string; explanation: string; url: string; hdurl?: string; media_type: string; date: string; copyright?: string };
 
@@ -47,6 +49,7 @@ const appItems: Array<{ id: AppId; label: string; kicker: string; icon: typeof B
   { id: "transcript", label: "Transcript.exe", kicker: "academic record", icon: BookOpen, tone: "red" },
   { id: "trophies", label: "Trophy Case.exe", kicker: "proof of work", icon: Trophy, tone: "amber" },
   { id: "projects", label: "Projects.exe", kicker: "selected builds", icon: FolderKanban, tone: "blue" },
+  { id: "ocw", label: "OCW / CS Tree", kicker: "course constellation", icon: TreePine, tone: "pink" },
   { id: "terminal", label: "Terminal.exe", kicker: "run a query", icon: TerminalIcon, tone: "green" },
   { id: "notes", label: "Notes.exe", kicker: "field notes", icon: FileText, tone: "violet" },
   { id: "orbital", label: "Orbital Brief.exe", kicker: "NASA live feed", icon: Radar, tone: "cyan" },
@@ -56,6 +59,7 @@ const defaultPositions: Record<AppId, WindowPosition> = {
   transcript: { left: 292, top: 106 },
   trophies: { left: 594, top: 138 },
   projects: { left: 370, top: 110 },
+  ocw: { left: 448, top: 84 },
   terminal: { left: 320, top: 152 },
   notes: { left: 630, top: 118 },
   orbital: { left: 250, top: 88 },
@@ -66,6 +70,32 @@ const projectData = [
   { title: "Atlas of Attention", type: "research", desc: "A visual field guide to finding signal in noisy systems.", meta: "Python · D3 · 2024", tone: "blue" },
   { title: "Lumen Grid", type: "systems", desc: "A resilient energy dashboard for microgrid operators.", meta: "TypeScript · WebGL · 2024", tone: "amber" },
 ];
+
+const ocwNodes = [
+  { id: "root", label: "MIT EECS / computer science", meta: "THE BIG TREE", depth: 0, branch: "pink" },
+  { id: "foundations", label: "foundations", meta: "4 courses", depth: 1, branch: "pink" },
+  { id: "6.006", label: "6.006 · algorithms", meta: "active · 12 weeks", depth: 2, branch: "pink" },
+  { id: "18.06", label: "18.06 · linear algebra", meta: "completed · A", depth: 2, branch: "pink" },
+  { id: "systems", label: "systems & architecture", meta: "3 courses", depth: 1, branch: "blue" },
+  { id: "6.033", label: "6.033 · computer systems", meta: "active · 10 weeks", depth: 2, branch: "blue" },
+  { id: "6.004", label: "6.004 · computation structures", meta: "next up · 13 weeks", depth: 2, branch: "blue" },
+  { id: "ai", label: "ai & intelligence", meta: "3 courses", depth: 1, branch: "lime" },
+  { id: "6.034", label: "6.034 · artificial intelligence", meta: "queued · 12 weeks", depth: 2, branch: "lime" },
+  { id: "6.100", label: "6.100 · programming", meta: "completed · A", depth: 2, branch: "lime" },
+];
+
+const ocwDetails: Record<string, { title: string; accent: string; description: string; tags: string[] }> = {
+  root: { title: "The MIT CS constellation", accent: "pink", description: "A playful map of the computer science spine: start with foundations, branch into systems, then follow the signal toward intelligence.", tags: ["OCW INDEX", "MIT EECS", "SELF-PACED"] },
+  foundations: { title: "Foundations", accent: "pink", description: "The core mental models: algorithms, linear algebra, probability, and the craft of making a proof executable.", tags: ["ALGORITHMS", "MATH", "LOGIC"] },
+  "6.006": { title: "6.006 / Introduction to Algorithms", accent: "pink", description: "Design and analysis of efficient algorithms. A cozy little forest of graphs, heaps, hashing, and the occasional dynamic-programming boss battle.", tags: ["GRAPHS", "DP", "COMPLEXITY"] },
+  "18.06": { title: "18.06 / Linear Algebra", accent: "pink", description: "Vectors, matrices, eigenvalues, and the geometry hiding under every good model.", tags: ["VECTORS", "EIGENVALUES", "MODELS"] },
+  systems: { title: "Systems & architecture", accent: "blue", description: "The branch where abstractions meet silicon: operating systems, distributed services, networks, and trade-offs with receipts.", tags: ["OS", "NETWORKS", "DISTRIBUTED"] },
+  "6.033": { title: "6.033 / Computer Systems Engineering", accent: "blue", description: "Build systems that survive real users, real failure, and real time. The favorite branch of this desktop.", tags: ["RELIABILITY", "SECURITY", "DESIGN"] },
+  "6.004": { title: "6.004 / Computation Structures", accent: "blue", description: "From Boolean logic to processors: understand the machine all the way down to the voltage.", tags: ["DIGITAL", "CPU", "HARDWARE"] },
+  ai: { title: "AI & intelligence", accent: "lime", description: "The branch that asks how machines can represent, infer, and act — with a human-sized sense of wonder.", tags: ["LEARNING", "SEARCH", "AGENTS"] },
+  "6.034": { title: "6.034 / Artificial Intelligence", accent: "lime", description: "Symbolic reasoning, search, learning, and the lovely friction between a clean theory and a messy world.", tags: ["REASONING", "SEARCH", "LEARNING"] },
+  "6.100": { title: "6.100 / Introduction to Programming", accent: "lime", description: "The first spark: variables, functions, recursion, and the confidence to make the computer do a tiny dance.", tags: ["PYTHON", "RECURSION", "BUILD"] },
+};
 
 const awards = [
   { date: "05.25", title: "HackMIT — Grand Prize", detail: "Real-time assistive computing", badge: "01" },
@@ -91,6 +121,7 @@ function Home() {
     transcript: true,
     trophies: false,
     projects: false,
+    ocw: false,
     terminal: false,
     notes: false,
     orbital: false,
@@ -100,6 +131,7 @@ function Home() {
     transcript: false,
     trophies: false,
     projects: false,
+    ocw: false,
     terminal: false,
     notes: false,
     orbital: false,
@@ -109,18 +141,19 @@ function Home() {
   const [commandQuery, setCommandQuery] = useState("");
   const [terminalInput, setTerminalInput] = useState("");
   const [terminalLines, setTerminalLines] = useState<string[]>([
-    "RAO.OS shell / secure session established",
+    "MIT POV OS shell / secure session established",
     "type 'help' for available commands",
     "",
   ]);
+  const [ocwSelected, setOcwSelected] = useState("root");
   const [notes, setNotes] = useState(() => {
     if (typeof window === "undefined") return "The best systems make the complex feel inevitable.\n\nCurrent focus → distributed intelligence, human-scale tools, and the discipline to ship.";
-    return window.localStorage.getItem("rao-os-notes") || "The best systems make the complex feel inevitable.\n\nCurrent focus → distributed intelligence, human-scale tools, and the discipline to ship.";
+    return window.localStorage.getItem("mit-pov-notes") || "The best systems make the complex feel inevitable.\n\nCurrent focus → distributed intelligence, human-scale tools, and the discipline to ship.";
   });
   const [notesSaved, setNotesSaved] = useState(true);
   const [nasaKey, setNasaKey] = useState(() => {
     if (typeof window === "undefined") return "";
-    return window.localStorage.getItem("rao-os-nasa-key") || "";
+    return window.localStorage.getItem("mit-pov-nasa-key") || "";
   });
   const [apod, setApod] = useState<Apod | null>(null);
   const [apodLoading, setApodLoading] = useState(false);
@@ -233,12 +266,12 @@ function Home() {
         response = [`launching ${match.label} …`];
       } else response = [`app not found: ${target}`];
     } else response = [`command not found: ${command} · type 'help'`];
-    setTerminalLines((lines) => [...lines, `guest@rao-os:~$ ${terminalInput}`, ...response, ""]);
+    setTerminalLines((lines) => [...lines, `guest@mit-pov:~$ ${terminalInput}`, ...response, ""]);
     setTerminalInput("");
   };
 
   const saveNotes = () => {
-    window.localStorage.setItem("rao-os-notes", notes);
+    window.localStorage.setItem("mit-pov-notes", notes);
     setNotesSaved(true);
     setSystemMessage("Notes synced to local vault");
   };
@@ -252,7 +285,7 @@ function Home() {
       if (!response.ok) throw new Error(response.status === 429 ? "NASA rate limit reached. Add a personal key for more requests." : "NASA feed unavailable right now.");
       const data = (await response.json()) as Apod;
       setApod(data);
-      window.localStorage.setItem("rao-os-nasa-key", nasaKey.trim());
+      window.localStorage.setItem("mit-pov-nasa-key", nasaKey.trim());
       setSystemMessage("Orbital feed updated from NASA");
     } catch (error) {
       setApodError(error instanceof Error ? error.message : "Could not reach NASA.");
@@ -266,11 +299,11 @@ function Home() {
       <main className="welcome-screen">
         <div className="welcome-noise" />
         <div className="welcome-grid" />
-        <div className="welcome-topline"><span>RAO.OS / PERSONAL COMPUTING ENVIRONMENT</span><span>BUILD 26.09.22</span></div>
+        <div className="welcome-topline"><span>MIT POV OS / PERSONAL COMPUTING ENVIRONMENT</span><span>BUILD 26.09.22</span></div>
         <section className="welcome-layout">
           <div className="welcome-copy">
             <div className="eyebrow"><span className="pulse-dot" /> private portfolio instance · authorized visitor</div>
-            <h1>Welcome to<br /><em>RAO.OS</em></h1>
+            <h1>Welcome to<br /><em>MIT POV OS</em></h1>
             <p className="welcome-lede">A sharp, quiet workstation for the work behind the wins — built from the point of view of an MIT systems builder.</p>
             <div className="welcome-actions">
               <button className="primary-action" onClick={() => setEntered(true)}>Initialize desktop <ChevronRight size={17} /></button>
@@ -301,7 +334,7 @@ function Home() {
   return (
     <main className="os-shell">
       <header className="topbar">
-        <div className="topbar-brand"><span className="brand-mark">R</span><span>RAO.OS</span><span className="brand-version">v2.6</span></div>
+        <div className="topbar-brand"><span className="brand-mark">M</span><span>MIT POV OS</span><span className="brand-version">v2.6</span></div>
         <div className="topbar-context"><span className="context-led" />{activeApp ? appItems.find((app) => app.id === activeApp)?.label : "desktop"}<span className="slash">/</span><span className="muted">focused workspace</span></div>
         <div className="topbar-right"><span className="topbar-date">{formatDate(time)}</span><span className="topbar-time">{formatTime(time)}</span><button className="topbar-command" onClick={() => setCommandOpen(true)} aria-label="Open command palette"><Command size={14} /><kbd>⌘ K</kbd></button></div>
       </header>
@@ -344,8 +377,13 @@ function Home() {
             <div className="project-list">{projectData.map((project, index) => <a className={`project-card project-${project.tone}`} href="https://github.com/" target="_blank" rel="noreferrer" key={project.title}><div className="project-number">0{index + 1}</div><div className="project-card-body"><span className="project-type">{project.type}</span><strong>{project.title}</strong><p>{project.desc}</p><span className="project-meta">{project.meta}</span></div><ExternalLink size={15} /></a>)}</div>
           </WindowFrame>
 
+          <WindowFrame id="ocw" title="OCW / CS Tree" eyebrow="MIT open courseware / constellation" icon={TreePine} isOpen={openWindows.ocw} isMaximized={maximized.ocw} position={positions.ocw} zIndex={topLayer + 2} onClose={closeApp} onMaximize={toggleMaximize} onBringToFront={bringToFront} onPointerDown={startDrag}>
+            <div className="ocw-intro"><div><span className="micro-label">COURSE CONSTELLATION</span><strong>THE CS TREE</strong></div><span className="ocw-sticker"><Star size={12} fill="currentColor" /> cute but rigorous</span></div>
+            <div className="ocw-layout"><div className="ocw-tree">{ocwNodes.map((node) => <button key={node.id} className={`ocw-node ocw-${node.branch} ${ocwSelected === node.id ? "active" : ""}`} style={{ "--depth": node.depth } as React.CSSProperties} onClick={() => setOcwSelected(node.id)}><span className="tree-branch">{node.depth === 0 ? <TreePine size={14} /> : node.depth === 1 ? <span className="branch-joint">✦</span> : <span className="leaf-dot" />}</span><span className="ocw-node-copy"><strong>{node.label}</strong><small>{node.meta}</small></span>{node.depth === 2 && <span className="node-check">{node.meta.includes("completed") ? "✓" : "→"}</span>}</button>)}</div><div className={`ocw-detail ocw-detail-${ocwDetails[ocwSelected].accent}`}><span className="micro-label">{ocwDetails[ocwSelected].tags[0]}</span><h3>{ocwDetails[ocwSelected].title}</h3><p>{ocwDetails[ocwSelected].description}</p><div className="ocw-tags">{ocwDetails[ocwSelected].tags.map((tag) => <span key={tag}>{tag}</span>)}</div><a href="https://ocw.mit.edu/search/?q=computer+science" target="_blank" rel="noreferrer">open MIT OCW <ExternalLink size={12} /></a></div></div>
+          </WindowFrame>
+
           <WindowFrame id="terminal" title="Terminal.exe" eyebrow="command line / guest session" icon={TerminalIcon} isOpen={openWindows.terminal} isMaximized={maximized.terminal} position={positions.terminal} zIndex={topLayer} onClose={closeApp} onMaximize={toggleMaximize} onBringToFront={bringToFront} onPointerDown={startDrag} variant="terminal">
-            <div className="terminal-screen">{terminalLines.map((line, index) => <div key={`${line}-${index}`} className={line.startsWith("guest") ? "terminal-command" : "terminal-output"}>{line || "\u00a0"}</div>)}<form className="terminal-form" onSubmit={runTerminalCommand}><span>guest@rao-os:~$</span><input autoFocus value={terminalInput} onChange={(event) => setTerminalInput(event.target.value)} aria-label="Terminal command" autoComplete="off" /><span className="terminal-cursor" /></form></div><div className="terminal-status"><span><span className="mini-led green" /> shell ready</span><span>tab autocomplete · enter run</span></div>
+            <div className="terminal-screen">{terminalLines.map((line, index) => <div key={`${line}-${index}`} className={line.startsWith("guest") ? "terminal-command" : "terminal-output"}>{line || "\u00a0"}</div>)}<form className="terminal-form" onSubmit={runTerminalCommand}><span>guest@mit-pov:~$</span><input autoFocus value={terminalInput} onChange={(event) => setTerminalInput(event.target.value)} aria-label="Terminal command" autoComplete="off" /><span className="terminal-cursor" /></form></div><div className="terminal-status"><span><span className="mini-led green" /> shell ready</span><span>tab autocomplete · enter run</span></div>
           </WindowFrame>
 
           <WindowFrame id="notes" title="Notes.exe" eyebrow="field notes / local vault" icon={FileText} isOpen={openWindows.notes} isMaximized={maximized.notes} position={positions.notes} zIndex={topLayer} onClose={closeApp} onMaximize={toggleMaximize} onBringToFront={bringToFront} onPointerDown={startDrag}>

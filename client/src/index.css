@@ -91,3 +91,80 @@ a { color: inherit; text-decoration: none; }
 @media (max-width: 980px) { .welcome-screen { padding: 25px; }.welcome-layout { grid-template-columns: 1fr .8fr; gap: 10px; }.welcome-orbit { width: min(450px, 43vw); }.desktop-sidebar { left: 17px; width: 195px; }.desktop-header-note { left: 28px; }.os-window { width: 350px; }.desktop-metrics { right: 20px; }.taskbar { left: 17px; right: 17px; } }
 @media (max-width: 720px) { body { overflow: auto; }.welcome-screen { min-height: 100svh; padding: 18px; }.welcome-topline span:last-child, .welcome-footer span:first-child { display: none; }.welcome-layout { display: flex; flex-direction: column; align-items: stretch; justify-content: center; gap: 30px; }.welcome-copy { padding: 35px 0 0; }.welcome-copy h1 { font-size: clamp(64px, 19vw, 104px); }.welcome-lede { font-size: 15px; }.welcome-meta { margin-top: 36px; gap: 10px; }.welcome-orbit { width: min(380px, 84vw); height: min(380px, 84vw); align-self: center; }.orbit-core { width: 122px; height: 122px; }.orbit-core span { font-size: 43px; }.orbit-label { font-size: 8px; }.welcome-footer { margin-top: 28px; }.welcome-footer span:nth-child(2) { font-size: 9px; }.welcome-footer span:last-child { font-size: 8px; }.topbar { grid-template-columns: 1fr auto; padding: 0 11px; }.topbar-context, .topbar-date { display: none; }.topbar-right { gap: 9px; }.desktop { height: calc(100vh - 46px); min-height: 680px; overflow: auto; }.desktop::before { min-height: 100%; }.desktop-header-note { top: 24px; left: 18px; }.desktop-header-note h2 { font-size: 31px; }.desktop-metrics { top: 25px; right: 17px; gap: 10px; }.desktop-metrics div:nth-child(2) { display: none; }.desktop-sidebar { top: 145px; left: 17px; right: 17px; width: auto; }.app-icon-grid { grid-template-columns: repeat(3, 1fr); gap: 4px; }.app-icon { min-height: 74px; }.sidebar-tip { display: none; }.campus-silhouette { width: 100%; right: 0; bottom: 90px; opacity: .12; }.window-layer { top: 325px; min-height: calc(100% - 325px); }.os-window { left: 14px !important; top: 10px !important; width: calc(100% - 28px); }.os-window.is-maximized { left: 7px !important; top: 7px !important; width: calc(100% - 14px); height: calc(100% - 75px); }.taskbar { position: fixed; left: 8px; right: 8px; bottom: 8px; overflow: hidden; }.taskbar-status, .taskbar-apps { display: none; }.taskbar-left { flex: 1; }.taskbar-right { gap: 8px; }.apod-content { grid-template-columns: 1fr; }.apod-content img { height: 145px; }.apod-copy p { max-height: 105px; }.nasa-key-row { grid-template-columns: 1fr 1.5fr; }.nasa-key-row > span { display: none; }.window-body { padding: 12px; } }
 @media (max-width: 420px) { .desktop-metrics { display: none; }.app-icon-label { font-size: 9px; }.app-icon-kicker { font-size: 7px; }.welcome-actions { align-items: flex-start; flex-direction: column; gap: 13px; }.course-row, .table-head { grid-template-columns: 44px 1fr 20px; gap: 5px; font-size: 8px; }.award-intro p { max-width: 125px; }.nasa-key-row { grid-template-columns: 38px 1fr; }.orbital-intro strong { font-size: 25px; } }
+
+/* MIT POV OS / OCW tree + pookie maximalism */
+.app-icon-pink .app-icon-glyph, .command-icon.pink { color: #ff8fc7; background: rgba(255,143,199,.14); }
+.ocw-intro { display:flex; justify-content:space-between; align-items:flex-end; padding-bottom:13px; border-bottom:1px solid var(--line); }
+.ocw-intro > div { display:flex; flex-direction:column; gap:7px; }
+.ocw-intro strong { color:#ff8fc7; font:500 28px/.9 var(--display); letter-spacing:-.07em; }
+.ocw-sticker { display:inline-flex; align-items:center; gap:5px; padding:6px 8px; color:#ff8fc7; border:1px solid rgba(255,143,199,.3); background:rgba(255,143,199,.08); font:8px var(--mono); transform:rotate(2deg); }
+.ocw-layout { display:grid; grid-template-columns:1.05fr .95fr; gap:13px; margin-top:13px; }
+.ocw-tree { max-height:294px; overflow-y:auto; padding-right:4px; }
+.ocw-node { position:relative; width:100%; display:flex; align-items:center; gap:7px; padding:7px 5px; padding-left:calc(5px + (var(--depth) * 15px)); text-align:left; color:var(--muted); background:transparent; cursor:pointer; border-left:1px solid rgba(255,255,255,.07); }
+.ocw-node:hover, .ocw-node.active { color:var(--ink); background:rgba(255,255,255,.06); }
+.ocw-node.active { border-left-color:currentColor; }
+.tree-branch { display:grid; place-items:center; width:17px; flex:none; }
+.ocw-pink .tree-branch, .ocw-pink .node-check { color:#ff8fc7; }
+.ocw-blue .tree-branch, .ocw-blue .node-check { color:var(--blue); }
+.ocw-lime .tree-branch, .ocw-lime .node-check { color:#b5d86b; }
+.branch-joint { font-size:12px; }.leaf-dot { width:5px; height:5px; border-radius:50%; background:currentColor; box-shadow:0 0 7px currentColor; }
+.ocw-node-copy { display:flex; flex-direction:column; gap:2px; min-width:0; }.ocw-node-copy strong { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font:9px var(--mono); }.ocw-node-copy small { color:var(--muted-2); font:8px var(--mono); }.node-check { margin-left:auto; font:10px var(--mono); }
+.ocw-detail { min-height:250px; padding:13px; border:1px solid rgba(255,143,199,.28); background:linear-gradient(145deg,rgba(255,143,199,.12),rgba(255,255,255,.025)); }
+.ocw-detail-blue { border-color:rgba(112,165,220,.28); background:linear-gradient(145deg,rgba(112,165,220,.12),rgba(255,255,255,.025)); }.ocw-detail-lime { border-color:rgba(181,216,107,.28); background:linear-gradient(145deg,rgba(181,216,107,.1),rgba(255,255,255,.025)); }
+.ocw-detail h3 { margin:10px 0; color:var(--ink); font:600 17px/1.08 var(--display); letter-spacing:-.05em; }.ocw-detail p { margin:0; color:var(--muted); font:9px/1.55 var(--mono); }
+.ocw-tags { display:flex; flex-wrap:wrap; gap:4px; margin:18px 0; }.ocw-tags span { padding:4px 5px; color:var(--muted); border:1px solid var(--line); font:7px var(--mono); }.ocw-detail a { display:inline-flex; align-items:center; gap:5px; color:#ff8fc7; font:9px var(--mono); }.ocw-detail-blue a { color:var(--blue); }.ocw-detail-lime a { color:#b5d86b; }
+@media (max-width:720px) { .ocw-layout { grid-template-columns:1fr; }.ocw-detail { min-height:180px; }.ocw-tree { max-height:210px; } }
+
+/* Light neo-brutalist MIT POV OS theme */
+:root {
+  --ink: #111111;
+  --muted: #4d4d4d;
+  --muted-2: #77736d;
+  --surface: #fffdf7;
+  --surface-2: #f2efe7;
+  --line: #111111;
+  --line-bright: #111111;
+  --cardinal: #ed3b32;
+  --cardinal-soft: #ed3b32;
+  --amber: #ffd43b;
+  --green: #61d64f;
+  --blue: #4387ff;
+  --violet: #b58cff;
+  --cyan: #54d9dc;
+  --mono: 'DM Mono', monospace;
+  --display: 'Space Grotesk', sans-serif;
+}
+body { background:#fffdf7; color:#111; }
+.welcome-screen { background:#fffdf7; color:#111; }
+.welcome-screen::after { background:radial-gradient(circle, rgba(255,87,119,.18), transparent 62%); }
+.welcome-grid, .desktop::before { background-image:linear-gradient(#11111112 1px, transparent 1px),linear-gradient(90deg,#11111112 1px,transparent 1px); opacity:.9; }
+.welcome-noise { opacity:.06; }
+.welcome-topline, .welcome-footer { color:#55514b; border-color:#111; }
+.welcome-topline span:last-child, .welcome-footer span:last-child { color:#111; }
+.welcome-copy h1 { color:#111; text-shadow:5px 5px 0 #ffd43b; }
+.welcome-copy h1 em { color:#ed3b32; }
+.welcome-lede { color:#36332f; font-weight:600; }
+.eyebrow, .micro-label { color:#4d4d4d; font-weight:600; }
+.pulse-dot, .context-led, .mini-led { background:#ed3b32; box-shadow:0 0 0 4px #ed3b3230; }
+.primary-action { color:#fff; background:#ed3b32; border:2px solid #111; border-radius:0; box-shadow:6px 6px 0 #111; }
+.primary-action:hover { color:#111; background:#ffd43b; box-shadow:3px 3px 0 #111; transform:translate(3px,3px); }
+.command-hint, .welcome-meta { color:#4d4d4d; font-weight:600; }
+.welcome-orbit { filter:drop-shadow(8px 8px 0 rgba(17,17,17,.13)); }
+.orbit-ring { border-color:#111; border-width:2px; }
+.orbit-ring-one { border-color:#ed3b32; }.orbit-ring-two { border-color:#4387ff; }
+.orbit-core { color:#111; border:3px solid #111; background:#ffd43b; box-shadow:8px 8px 0 #111; }
+.orbit-core small { color:#111; font-weight:600; }.orbit-label { color:#4d4d4d; font-weight:600; }.orbit-label strong { color:#111; }
+.orbit-line { background:#111; }
+.os-shell { background:#fffdf7; color:#111; }
+.topbar { background:#ffd43b; color:#111; border-bottom:2px solid #111; backdrop-filter:none; }
+.topbar-brand, .topbar-context, .topbar-right { color:#111; }.brand-mark { color:#fff; background:#ed3b32; border:2px solid #111; border-radius:0; }.brand-version, .muted, .topbar-right { color:#4d4d4d; }.topbar-command { color:#111; border:2px solid #111; border-radius:0; background:#fffdf7; }.topbar-command kbd { color:#111; }
+.desktop { background:#fffdf7; }.desktop::before { mask-image:none; }.desktop-atmosphere { opacity:.28; }.atmosphere-one { border-color:#ed3b32; box-shadow:0 0 0 70px #ed3b3220,0 0 0 140px #4387ff18; }.atmosphere-two { border-color:#61d64f; }
+.campus-silhouette { opacity:.24; }.campus-silhouette::before { background:#111; box-shadow:none; }.dome,.building,.dome-spire { border-color:#111; background:transparent; }.dome-spire { background:#111; }.dome-spire::before { border-color:#111; }
+.desktop-header-note h2 { color:#111; text-shadow:3px 3px 0 #54d9dc; }.desktop-header-note h2 span { color:#ed3b32; }.desktop-header-note p, .desktop-metrics span { color:#4d4d4d; font-weight:600; }.desktop-metrics strong { color:#111; font-weight:700; }
+.desktop-sidebar { color:#111; }.sidebar-profile { border-color:#111; }.profile-avatar { color:#111; border:2px solid #111; background:#b58cff; border-radius:0; }.sidebar-profile strong,.sidebar-profile span,.sidebar-section-label { color:#111; }.app-icon-grid { gap:8px; }.app-icon { min-height:83px; border:2px solid #111; border-radius:0; color:#111; background:#fff; box-shadow:4px 4px 0 #111; }.app-icon:hover { background:#54d9dc; border-color:#111; transform:translate(2px,2px); box-shadow:2px 2px 0 #111; }.app-icon.selected { background:#ffd43b; border-color:#111; }.app-icon-glyph { border:2px solid #111; border-radius:0; }.app-icon-label,.app-icon-kicker { color:#111; font-weight:600; }.sidebar-tip { color:#111; border:2px solid #111; background:#b58cff; box-shadow:4px 4px 0 #111; }.sidebar-tip svg { color:#111; }
+.os-window { border:2px solid #111; border-radius:0; background:#fffdf7; color:#111; box-shadow:8px 8px 0 #111; backdrop-filter:none; }.window-header { height:46px; border-bottom:2px solid #111; background:#4387ff; color:#111; }.window-icon { color:#111; border:2px solid #111; border-radius:0; background:#ffd43b; }.window-title strong,.window-title small { color:#111; }.window-controls button { color:#111; border:2px solid #111; border-radius:0; background:#fffdf7; }.window-controls button:hover { background:#ffd43b; }.window-controls button.close:hover { color:#fff; background:#ed3b32; border-color:#111; }
+.window-toolbar,.transcript-footer,.terminal-status,.notes-footer { color:#4d4d4d; font-weight:600; }.transcript-hero,.course-table,.table-head,.course-row,.transcript-footer,.award-intro,.award-row,.projects-intro,.notes-footer,.terminal-status,.orbital-intro { border-color:#111; }.transcript-hero strong,.award-intro strong,.projects-intro strong,.orbital-intro strong { color:#111; }.transcript-rank,.project-type,.ocw-intro strong { color:#ed3b32; }.grade-ring { color:#111; border:3px solid #111; background:#ffd43b; }.course-row,.award-row,.project-card,.ocw-node-copy small,.project-card p,.project-meta,.award-date { color:#36332f; }.course-row strong,.award-badge { color:#111; }.award-badge { border:2px solid #111; background:#ffd43b; }.window-note { color:#111; border:2px solid #111; background:#ffd43b; }.window-note span { color:#111; }
+.project-card { border:2px solid #111; background:#fff; }.project-card:hover { border-color:#111; background:#54d9dc; }.project-card strong { color:#111; }.terminal { background:#111; color:#61d64f; border-color:#111; }.terminal-screen { color:#61d64f; }.terminal-output { color:#a7ef9a; }.terminal-command { color:#fff; }.terminal-form { color:#ffd43b; }.notes-editor,.nasa-key-row input { color:#111; border:2px solid #111; border-radius:0; background:#fff; }.notes-editor:focus,.nasa-key-row input:focus { border-color:#4387ff; box-shadow:4px 4px 0 #4387ff; }.notes-toolbar button { color:#111; font-weight:700; }
+.ocw-intro,.ocw-detail { border-color:#111; }.ocw-intro strong { color:#ed3b32; text-shadow:2px 2px 0 #ffd43b; }.ocw-sticker { color:#111; border:2px solid #111; background:#ff8fc7; }.ocw-node { color:#36332f; border-left:2px solid #111; }.ocw-node:hover,.ocw-node.active { color:#111; background:#ffd43b; }.ocw-detail,.ocw-detail-blue,.ocw-detail-lime { color:#111; border:2px solid #111; background:#ff8fc7; box-shadow:4px 4px 0 #111; }.ocw-detail-blue { background:#54d9dc; }.ocw-detail-lime { background:#b5d86b; }.ocw-detail h3,.ocw-detail p { color:#111; }.ocw-tags span { color:#111; border:2px solid #111; background:#fffdf7; }.ocw-detail a,.ocw-detail-blue a,.ocw-detail-lime a { color:#111; font-weight:700; }
+.apod-content img,.apod-video { border:2px solid #111; }.apod-video { color:#111; background:#54d9dc; }.refresh-button { color:#111; border:2px solid #111; border-radius:0; background:#54d9dc; box-shadow:3px 3px 0 #111; }.apod-empty strong,.apod-empty p,.error-message { color:#111; }.nasa-key-row { color:#111; }.taskbar { border:2px solid #111; border-radius:0; background:#fff; box-shadow:6px 6px 0 #111; backdrop-filter:none; }.taskbar-launch { color:#111; border:2px solid #111; background:#ffd43b; }.taskbar-status,.taskbar-right,.taskbar-app { color:#111; }.taskbar-app:hover,.taskbar-app.active { color:#111; background:#ff8fc7; border-bottom:2px solid #111; }
+.command-overlay { background:#1118; backdrop-filter:blur(4px); }.command-palette { border:2px solid #111; border-radius:0; background:#fffdf7; box-shadow:8px 8px 0 #111; }.command-search,.command-footer { border-color:#111; }.command-search input,.command-item,.command-item strong { color:#111; }.command-search kbd { color:#111; border:2px solid #111; }.command-item:hover { background:#ffd43b; }.command-icon { border:2px solid #111; }.command-footer { color:#111; }
