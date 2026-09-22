@@ -1,9 +1,10 @@
 # mit-pov
 
 A personal, browser-based desktop OS — seen through the POV of an MIT topper. Draggable windows, a live top-bar clock, and desktop apps like a transcript, a trophy case, and a terminal, built as a real React + TypeScript app instead of a static page.
+<img width="957" height="422" alt="Screenshot 2026-09-23 023655" src="https://github.com/user-attachments/assets/c53011da-5235-4d9e-9d78-700c810698bb" />
 
-<!-- Add a screenshot or GIF of the desktop in action here -->
-<!-- ![mit-pov screenshot](./docs/screenshot.png) -->
+<img width="956" height="421" alt="Screenshot 2026-09-23 023502" src="https://github.com/user-attachments/assets/9196fa33-a04d-4ebb-ad6a-eb2deafcf5cb" />
+
 
 **[🖥️ Try it live →](https://mit-pov-webos.vercel.app)**
 
