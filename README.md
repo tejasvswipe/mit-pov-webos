@@ -5,7 +5,8 @@ A personal, browser-based desktop OS — seen through the POV of an MIT topper. 
 <!-- Add a screenshot or GIF of the desktop in action here -->
 <!-- ![mit-pov screenshot](./docs/screenshot.png) -->
 
-**[🖥️ Try it live →](#)** <!-- swap in your deployed URL once it's live -->
+**[🖥️ Try it live 
+mit-pov-webos.vercel.app
 
 ## Quick start
 
