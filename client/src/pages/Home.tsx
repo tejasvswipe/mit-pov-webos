@@ -41,7 +41,7 @@ import {
   Zap,
 } from "lucide-react";
 
-type AppId = "transcript" | "trophies" | "projects" | "ocw" | "terminal" | "notes" | "orbital";
+type AppId = "transcript" | "trophies" | "projects" | "ocw" | "terminal" | "notes" | "orbital" | "collab";
 type WindowPosition = { left: number; top: number };
 type Apod = { title: string; explanation: string; url: string; hdurl?: string; media_type: string; date: string; copyright?: string };
 
@@ -53,6 +53,7 @@ const appItems: Array<{ id: AppId; label: string; kicker: string; icon: typeof B
   { id: "terminal", label: "Terminal.exe", kicker: "run a query", icon: TerminalIcon, tone: "green" },
   { id: "notes", label: "Notes.exe", kicker: "field notes", icon: FileText, tone: "violet" },
   { id: "orbital", label: "Orbital Brief.exe", kicker: "NASA live feed", icon: Radar, tone: "cyan" },
+  { id: "collab", label: "Collab.exe", kicker: "live team room", icon: Network, tone: "green" },
 ];
 
 const defaultPositions: Record<AppId, WindowPosition> = {
@@ -63,6 +64,7 @@ const defaultPositions: Record<AppId, WindowPosition> = {
   terminal: { left: 320, top: 152 },
   notes: { left: 630, top: 118 },
   orbital: { left: 250, top: 88 },
+  collab: { left: 480, top: 150 },
 };
 
 const projectData = [
@@ -125,6 +127,7 @@ function Home() {
     terminal: false,
     notes: false,
     orbital: false,
+    collab: false,
   });
   const [positions, setPositions] = useState(defaultPositions);
   const [maximized, setMaximized] = useState<Record<AppId, boolean>>({
@@ -135,6 +138,7 @@ function Home() {
     terminal: false,
     notes: false,
     orbital: false,
+    collab: false,
   });
   const [topLayer, setTopLayer] = useState(20);
   const [commandOpen, setCommandOpen] = useState(false);
@@ -394,6 +398,45 @@ function Home() {
             <div className="orbital-intro"><div><span className="micro-label">NASA / ASTRONOMY PICTURE OF THE DAY</span><strong>LOOK UP.</strong></div><button className="refresh-button" onClick={fetchApod} disabled={apodLoading}>{apodLoading ? <Loader2 size={14} className="spin" /> : <RefreshCw size={14} />} {apodLoading ? "syncing" : "fetch latest"}</button></div>
             <div className="nasa-key-row"><label htmlFor="nasa-key">API KEY</label><input id="nasa-key" type="password" value={nasaKey} onChange={(event) => setNasaKey(event.target.value)} placeholder="optional · DEMO_KEY works" /><span>stored locally only</span></div>
             {apod ? <div className="apod-content">{apod.media_type === "image" ? <img src={apod.url} alt={apod.title} /> : <div className="apod-video"><Play size={20} /> NASA video brief</div>}<div className="apod-copy"><span className="micro-label">{apod.date} {apod.copyright ? `· © ${apod.copyright}` : ""}</span><h3>{apod.title}</h3><p>{apod.explanation}</p><a href={apod.hdurl || apod.url} target="_blank" rel="noreferrer">open source image <ExternalLink size={13} /></a></div></div> : <div className="apod-empty"><Rocket size={26} /><strong>Mission control is standing by.</strong><p>Pull NASA's public APOD feed into this workspace. No key is required for a first look; a personal key improves rate limits.</p><button className="primary-action small" onClick={fetchApod}><Radar size={15} /> initialize feed</button>{apodError && <span className="error-message">{apodError}</span>}</div>}
+          </WindowFrame>
+
+          <WindowFrame id="collab" title="Collab.exe" eyebrow="team room / live sync" icon={Network} isOpen={openWindows.collab} isMaximized={maximized.collab} position={positions.collab} zIndex={topLayer + 2} onClose={closeApp} onMaximize={toggleMaximize} onBringToFront={bringToFront} onPointerDown={startDrag}>
+            <div className="collab-intro">
+              <div>
+                <span className="micro-label">PROJECT ROOM / MIT-ALPHA</span>
+                <strong>Shared build sprint</strong>
+              </div>
+              <button className="refresh-button">Invite</button>
+            </div>
+
+            <div className="collab-layout">
+              <div className="collab-panel">
+                <div className="panel-header">Active members</div>
+                <div className="member-list">
+                  <div className="member-row"><span className="member-avatar green">AK</span><div><strong>Alex Kim</strong><small>editing system logic</small></div><span className="member-status online">online</span></div>
+                  <div className="member-row"><span className="member-avatar amber">LM</span><div><strong>Lena Moore</strong><small>reviewing notes</small></div><span className="member-status online">online</span></div>
+                  <div className="member-row"><span className="member-avatar blue">JS</span><div><strong>Jules Smith</strong><small>commenting on tasks</small></div><span className="member-status idle">idle</span></div>
+                </div>
+              </div>
+
+              <div className="collab-panel">
+                <div className="panel-header">Shared tasks</div>
+                <div className="task-list">
+                  <div className="task-item"><div><strong>Finalize UI polish</strong><small>due in 45 mins</small></div><span className="task-tag done">done</span></div>
+                  <div className="task-item"><div><strong>Sync collaboration room</strong><small>in progress</small></div><span className="task-tag live">live</span></div>
+                  <div className="task-item"><div><strong>Review handoff notes</strong><small>queued</small></div><span className="task-tag queued">queued</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div className="collab-feed">
+              <div className="panel-header">Live activity</div>
+              <ul>
+                <li><span className="feed-dot" /> Alex shared a new design pass in the room.</li>
+                <li><span className="feed-dot" /> Lena left a review comment on the project brief.</li>
+                <li><span className="feed-dot" /> Jules updated the shared checklist to “ready for QA”.</li>
+              </ul>
+            </div>
           </WindowFrame>
         </div>
 
