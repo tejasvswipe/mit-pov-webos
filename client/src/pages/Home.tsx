@@ -254,8 +254,8 @@ function Home() {
     if (!command) return;
     let response: string[] = [];
     if (command === "help") response = ["available → whoami · contact · resume · open [app] · clear · status"];
-    else if (command === "whoami") response = ["alex.kim / systems builder / MIT '26 / human-scale optimist"];
-    else if (command === "contact") response = ["signal route → hello@alexkim.dev  /  linkedin.com/in/alexkim"];
+    else if (command === "whoami") response = ["tejas / systems builder / MIT '26 / human-scale optimist"];
+    else if (command === "contact") response = ["signal route → hello@tejas.dev  /  linkedin.com/in/tejas"];
     else if (command === "resume") response = ["resume.pdf is staged in the portfolio vault → opening Projects.exe"];
     else if (command === "status") response = ["cpu 18% · memory 42% · uptime 47d 03h · curiosity 100%"];
     else if (command === "clear") {
@@ -322,7 +322,7 @@ function Home() {
           <div className="welcome-orbit" aria-hidden="true">
             <div className="orbit-ring orbit-ring-one" />
             <div className="orbit-ring orbit-ring-two" />
-            <div className="orbit-core"><span>AK</span><small>MIT / 26</small></div>
+            <div className="orbit-core"><span>T</span><small>MIT / 26</small></div>
             <div className="orbit-label label-top">SYSTEMS<br /><strong>BUILDER</strong></div>
             <div className="orbit-label label-right">GPA<br /><strong>4.00</strong></div>
             <div className="orbit-label label-bottom">RESEARCH<br /><strong>07 CREDITS</strong></div>
@@ -330,7 +330,7 @@ function Home() {
             <div className="orbit-line line-a" /><div className="orbit-line line-b" /><div className="orbit-line line-c" />
           </div>
         </section>
-        <footer className="welcome-footer"><span>DESIGNED FOR FOCUS</span><span>↓ the desktop is the portfolio</span><span>© 2026 / ALEX KIM</span></footer>
+        <footer className="welcome-footer"><span>DESIGNED FOR FOCUS</span><span>↓ the desktop is the portfolio</span><span>© 2026 / TEJAS</span></footer>
       </main>
     );
   }
@@ -350,7 +350,7 @@ function Home() {
         <div className="desktop-metrics"><div><span>LOCAL TIME</span><strong>{formatTime(time).slice(0, 5)}</strong></div><div><span>FOCUS MODE</span><strong>DEEP WORK</strong></div><div><span>SESSION</span><strong>00:42:18</strong></div></div>
 
         <aside className="desktop-sidebar" onPointerDown={(event) => event.stopPropagation()}>
-          <div className="sidebar-profile"><div className="profile-avatar">AK</div><div><strong>ALEX KIM</strong><span>MIT '26 · CS / EECS</span></div><CircleUserRound size={16} /></div>
+          <div className="sidebar-profile"><div className="profile-avatar">T</div><div><strong>TEJAS</strong><span>MIT '26 · CS / EECS</span></div><CircleUserRound size={16} /></div>
           <div className="sidebar-section-label">WORKSPACE</div>
           <div className="app-icon-grid">
             {appItems.map(({ id, label, kicker, icon: Icon, tone }) => (
@@ -413,7 +413,7 @@ function Home() {
               <div className="collab-panel">
                 <div className="panel-header">Active members</div>
                 <div className="member-list">
-                  <div className="member-row"><span className="member-avatar green">AK</span><div><strong>Alex Kim</strong><small>editing system logic</small></div><span className="member-status online">online</span></div>
+                  <div className="member-row"><span className="member-avatar green">T</span><div><strong>Tejas</strong><small>editing system logic</small></div><span className="member-status online">online</span></div>
                   <div className="member-row"><span className="member-avatar amber">LM</span><div><strong>Lena Moore</strong><small>reviewing notes</small></div><span className="member-status online">online</span></div>
                   <div className="member-row"><span className="member-avatar blue">JS</span><div><strong>Jules Smith</strong><small>commenting on tasks</small></div><span className="member-status idle">idle</span></div>
                 </div>
@@ -432,7 +432,7 @@ function Home() {
             <div className="collab-feed">
               <div className="panel-header">Live activity</div>
               <ul>
-                <li><span className="feed-dot" /> Alex shared a new design pass in the room.</li>
+                <li><span className="feed-dot" /> Tejas shared a new design pass in the room.</li>
                 <li><span className="feed-dot" /> Lena left a review comment on the project brief.</li>
                 <li><span className="feed-dot" /> Jules updated the shared checklist to “ready for QA”.</li>
               </ul>
