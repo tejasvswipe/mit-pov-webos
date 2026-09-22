@@ -1,6 +1,6 @@
 import express from "express";
 import { createServer } from "http";
-import v e ee wwd wwd wwd wwdd wdd wdd wwdd wwdd d wd wd wd wwd dw wdwdwd d wd wd wd wd wd dd wd w path from "path";
+import path from "path";
 import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
