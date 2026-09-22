@@ -203,7 +203,7 @@ body, .welcome-screen, .os-shell, .desktop { background-color: var(--baby-pink);
 .welcome-grid, .desktop::before { background-image: repeating-conic-gradient(from 45deg, rgba(239,255,82,.62) 0 25%, rgba(255,215,231,.08) 0 50%); background-size: 56px 56px; opacity: .72; mask-image: none; }
 .welcome-screen::after { background: radial-gradient(circle, rgba(255,143,199,.34), transparent 62%); }
 .desktop { background-image: radial-gradient(circle at 73% 18%, rgba(255,143,199,.28), transparent 28%), radial-gradient(circle at 32% 88%, rgba(239,255,82,.18), transparent 33%); }
-/* ===== WHITE + PINK STRIP THEME ===== */
+ /* ===== WHITE + PINK STRIP THEME ===== */
 
 :root {
   --pink: #ff69b4;
@@ -245,4 +245,38 @@ body, .welcome-screen, .os-shell, .desktop { background-color: var(--baby-pink);
       transparent 42%,
       rgba(255, 105, 180, 0.48) 42%,
       rgba(255, 105, 180, 0.48) 46%,
-      transparent 
+      transparent 46%,
+      transparent 68%,
+      rgba(255, 182, 217, 0.62) 68%,
+      rgba(255, 182, 217, 0.62) 74%,
+      transparent 74%
+    );
+}
+
+/* Hide the old curved atmosphere */
+.desktop-atmosphere {
+  display: none;
+}
+
+/* Keep the campus silhouette subtle */
+.campus-silhouette {
+  opacity: 0.08;
+}
+
+/* Make text readable on white */
+.desktop-header-note h2,
+.desktop-sidebar,
+.desktop-metrics {
+  color: #252025;
+}
+
+/* Pink instead of the old red accent */
+.desktop-header-note h2 span {
+  color: var(--pink);
+}
+
+/* Pink straight baseline */
+.campus-silhouette::before {
+  background: var(--pink);
+  box-shadow: 0 -1px 24px rgba(255, 105, 180, 0.45);
+}
