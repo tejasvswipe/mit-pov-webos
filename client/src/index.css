@@ -280,3 +280,91 @@ body, .welcome-screen, .os-shell, .desktop { background-color: var(--baby-pink);
   background: var(--pink);
   box-shadow: 0 -1px 24px rgba(255, 105, 180, 0.45);
 }
+/* =========================================
+   FRONT / WELCOME SCREEN — WHITE + PINK
+   ========================================= */
+
+.welcome-screen {
+  background: #ffffff !important;
+  color: #171717;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Remove the old red circular glow */
+.welcome-screen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  border-radius: 0;
+  background:
+    linear-gradient(
+      165deg,
+      transparent 0%,
+      transparent 12%,
+      rgba(255, 190, 220, 0.75) 12%,
+      rgba(255, 190, 220, 0.75) 17%,
+      transparent 17%,
+      transparent 34%,
+      rgba(255, 105, 180, 0.45) 34%,
+      rgba(255, 105, 180, 0.45) 39%,
+      transparent 39%,
+      transparent 57%,
+      rgba(255, 190, 220, 0.75) 57%,
+      rgba(255, 190, 220, 0.75) 63%,
+      transparent 63%,
+      transparent 80%,
+      rgba(255, 105, 180, 0.4) 80%,
+      rgba(255, 105, 180, 0.4) 85%,
+      transparent 85%
+    ) !important;
+  filter: none !important;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Keep the existing straight layout/grid from interfering */
+.welcome-grid {
+  background-image: none !important;
+}
+
+/* Make welcome text dark like the other pages */
+.welcome-screen h1,
+.welcome-screen h2,
+.welcome-screen h3,
+.welcome-screen p,
+.welcome-screen span {
+  color: #171717;
+}
+
+/* Pink accent for MIT POV OS */
+.welcome-screen .accent,
+.welcome-screen .highlight,
+.welcome-screen .brand,
+.welcome-screen h1 span {
+  color: #f04f9d;
+}
+
+/* Keep buttons looking like the other pages */
+.welcome-screen button {
+  position: relative;
+  z-index: 2;
+}
+
+/* Pink straight decorative line */
+.welcome-screen::before {
+  content: '';
+  position: absolute;
+  width: 150%;
+  height: 55px;
+  left: -25%;
+  top: 46%;
+  background: rgba(255, 105, 180, 0.22);
+  transform: rotate(-12deg);
+  pointer-events: none;
+  z-index: -1;
+}
