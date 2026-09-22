@@ -3,9 +3,13 @@
   "builds": [
     {
       "src": "server/index.ts",
-      "use": "@vercel/node"
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": ["dist/public/**"]
+      }
     }
   ],
+  "buildCommand": "npm run build",
   "routes": [
     { "src": "/health", "dest": "server/index.ts" },
     { "src": "/(.*)", "dest": "server/index.ts" }
