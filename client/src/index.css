@@ -203,3 +203,46 @@ body, .welcome-screen, .os-shell, .desktop { background-color: var(--baby-pink);
 .welcome-grid, .desktop::before { background-image: repeating-conic-gradient(from 45deg, rgba(239,255,82,.62) 0 25%, rgba(255,215,231,.08) 0 50%); background-size: 56px 56px; opacity: .72; mask-image: none; }
 .welcome-screen::after { background: radial-gradient(circle, rgba(255,143,199,.34), transparent 62%); }
 .desktop { background-image: radial-gradient(circle at 73% 18%, rgba(255,143,199,.28), transparent 28%), radial-gradient(circle at 32% 88%, rgba(239,255,82,.18), transparent 33%); }
+/* ===== WHITE + PINK STRIP THEME ===== */
+
+:root {
+  --pink: #ff69b4;
+  --pink-light: #ffb6d9;
+  --white: #ffffff;
+}
+
+/* Main OS background */
+.os-shell {
+  background: #ffffff;
+}
+
+/* White desktop with straight pink strips */
+.desktop {
+  background: #ffffff;
+  position: relative;
+}
+
+/* Remove the old grid/atmosphere look */
+.desktop::before {
+  background-image: none;
+}
+
+/* Straight pink strips */
+.desktop::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      165deg,
+      transparent 0%,
+      transparent 17%,
+      rgba(255, 182, 217, 0.72) 17%,
+      rgba(255, 182, 217, 0.72) 22%,
+      transparent 22%,
+      transparent 42%,
+      rgba(255, 105, 180, 0.48) 42%,
+      rgba(255, 105, 180, 0.48) 46%,
+      transparent 
