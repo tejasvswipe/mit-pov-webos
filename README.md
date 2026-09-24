@@ -12,7 +12,8 @@ A desktop OS from the perspective of an MIT topper, featuring draggable windows,
 
 ## Quick Start
 
-
+<img width="957" height="422" alt="Screenshot 2026-09-23 023655" src="https://github.com/user-attachments/assets/4c947398-79dc-41d9-bb3b-db6f76b3065f" />
+<img width="956" height="421" alt="Screenshot 2026-09-23 023502" src="https://github.com/user-attachments/assets/bfdfb2af-c20e-4391-9b73-b05f2d1d48ab" />
 
 Visit the link above. No install required.
 
