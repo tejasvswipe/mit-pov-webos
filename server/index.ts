@@ -4,13 +4,9 @@ import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
 const app = express();
 
-const staticPath =
-  process.env.NODE_ENV === "production"
-    ? path.resolve(__dirname, "..", "dist", "public")
-    : path.resolve(__dirname, "..", "dist", "public");
+const staticPath = path.resolve(__dirname, "..", "dist", "public");
 
 app.use(express.static(staticPath));
 
