@@ -3,7 +3,7 @@ lockfileVersion: '9.0'
 settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
-
+# u r gay
 overrides:
   tailwindcss>nanoid: 3.3.7
 
