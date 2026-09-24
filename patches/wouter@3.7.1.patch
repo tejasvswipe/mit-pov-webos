@@ -20,7 +20,8 @@ index c83bc63a2c10431fb62e25b7d490656a3796f301..bcae513cc20a4be6c38dc116e0b8d9ba
 +          window.__WOUTER_ROUTES__.push(path);
 +        }
 +      }
-+    });
++    }); 
+#completed bruh
 +  }
 +
    for (const element of flattenChildren(children)) {
