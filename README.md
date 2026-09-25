@@ -11,7 +11,7 @@ we doesnt sucks
 ## Quick Start
 
 No installation required! Just visit [mit-pov-webos.vercel.app](https://mit-pov-webos.vercel.app?utm_source=gemini).
- commit -m " i want good stardust due to my robot builing project "
+ commit -m " i want good stardust due to my robot building  (a rizzy  robot irl ) project "
 ## Features
 
 * **Desktop shell:** Custom wallpaper, live clock on the top bar, and desktop app icons.
