@@ -9,8 +9,8 @@
 ## Preview
 
 <p align="center">
-  <img width="957" alt="Desktop OS Preview" src="https://github.com/user-attachments/assets/4c947398-79dc-41d9-bb3b-db6f76b3065f" />
-</p>
+  <img width="957" alt="Desktop OS Preview" src=<img width="956" height="421" alt="Screenshot 2026-09-23 023502" src="https://github.com/user-attachments/assets/dd07c66a-edd3-43b7-aad4-4f43a41d5a43" /></p>
+
 
 <details>
   <summary><img width="957" height="422" alt="Screenshot 2026-09-23 023655" src="https://github.com/user-attachments/assets/b28b906a-3634-47d0-b122-696da6b92dcf" />
