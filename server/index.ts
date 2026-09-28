@@ -24,4 +24,5 @@ if (!process.env.VERCEL) {
     console.log(`Server running on http://localhost:${port}/`);
   });
 }
-export default app; 
+
+export default app;
