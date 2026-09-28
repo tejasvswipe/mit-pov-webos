@@ -1,11 +1,14 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import type { CSSProperties, FormEvent, PointerEvent, ReactNode } from "react";
+import type { CSSProperties, FormEvent, PointerEvent as ReactPointerEvent, ReactNode } from "react";
 import {
   Activity,
+  AlarmClock,
+  Bot,
   Award,
   BookOpen,
   CalendarDays,
   ChevronRight,
+  Check,
   CircleUserRound,
   Code2,
   Command,
@@ -14,6 +17,8 @@ import {
   Download,
   ExternalLink,
   FileText,
+  MessageCircle,
+  Music2,
   FolderKanban,
   Github,
   Globe2,
@@ -24,6 +29,7 @@ import {
   Minus,
   Network,
   Play,
+  Pause,
   Radar,
   RefreshCw,
   Rocket,
@@ -42,7 +48,7 @@ import {
   Zap,
 } from "lucide-react";
 
-type AppId = "transcript" | "trophies" | "projects" | "ocw" | "terminal" | "notes" | "orbital" | "collab";
+type AppId = "transcript" | "trophies" | "projects" | "ocw" | "terminal" | "notes" | "orbital" | "collab" | "alarm" | "spotify" | "assistant";
 type WindowPos = { left: number; top: number };
 type Apod = { title: string; explanation: string; url: string; hdurl?: string; media_type: string; date: string; copyright?: string };
 
@@ -63,6 +69,9 @@ const apps: AppDef[] = [
   { id: "notes", label: "Notes.exe", kicker: "field notes", icon: FileText, tone: "violet" },
   { id: "orbital", label: "Orbital Brief.exe", kicker: "NASA live feed", icon: Radar, tone: "cyan" },
   { id: "collab", label: "Collab.exe", kicker: "live team room", icon: Network, tone: "green" },
+  { id: "alarm", label: "Alarm.exe", kicker: "focus scheduler", icon: AlarmClock, tone: "amber" },
+  { id: "spotify", label: "Spotify.exe", kicker: "music control", icon: Music2, tone: "green" },
+  { id: "assistant", label: "LLM Desk.exe", kicker: "thinking partner", icon: Bot, tone: "violet" },
 ];
 
 const startPositions: Record<AppId, WindowPos> = {
@@ -74,6 +83,9 @@ const startPositions: Record<AppId, WindowPos> = {
   notes: { left: 630, top: 118 },
   orbital: { left: 250, top: 88 },
   collab: { left: 480, top: 150 },
+  alarm: { left: 320, top: 128 },
+  spotify: { left: 570, top: 104 },
+  assistant: { left: 430, top: 92 },
 };
 
 const workItems = [
@@ -187,6 +199,9 @@ function Home() {
     notes: false,
     orbital: false,
     collab: false,
+    alarm: false,
+    spotify: false,
+    assistant: false,
   });
   const [positions, setPositions] = useState(startPositions);
   const [maximized, setMaximized] = useState<Record<AppId, boolean>>({
@@ -198,6 +213,9 @@ function Home() {
     notes: false,
     orbital: false,
     collab: false,
+    alarm: false,
+    spotify: false,
+    assistant: false,
   });
   const [stackLevel, setStackLevel] = useState(20);
   const [commandOpen, setCommandOpen] = useState(false);
@@ -224,6 +242,16 @@ function Home() {
   const [apodLoading, setApodLoading] = useState(false);
   const [apodError, setApodError] = useState("");
   const [systemMessage, setSystemMessage] = useState("All systems nominal");
+  const [alarmTime, setAlarmTime] = useState(() => window.localStorage.getItem("mit-pov-alarm-time") || "07:30");
+  const [alarmEnabled, setAlarmEnabled] = useState(() => window.localStorage.getItem("mit-pov-alarm-enabled") === "true");
+  const [alarmRinging, setAlarmRinging] = useState(false);
+  const [spotifyConnected, setSpotifyConnected] = useState(() => window.localStorage.getItem("mit-pov-spotify") === "true");
+  const [spotifyPlaying, setSpotifyPlaying] = useState(false);
+  const [assistantInput, setAssistantInput] = useState("");
+  const [assistantMessages, setAssistantMessages] = useState<{ role: "user" | "assistant"; text: string }[]>([
+    { role: "assistant", text: "I’m LLM Desk — a focused thinking partner for this workspace. Ask me to plan, explain, or turn a rough idea into next steps." },
+  ]);
+  const alarmTriggeredRef = useRef("");
   const desktopRef = useRef<HTMLDivElement>(null);
   const dragRef = useRef<{ id: AppId; offsetX: number; offsetY: number } | null>(null);
 
@@ -237,6 +265,28 @@ function Home() {
     const timer = window.setInterval(() => setTime(new Date()), 1000);
     return () => window.clearInterval(timer);
   }, []);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      const now = new Date();
+      const minute = `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
+      const key = `${now.toDateString()}-${minute}`;
+      if (alarmEnabled && minute === alarmTime && alarmTriggeredRef.current !== key) {
+        alarmTriggeredRef.current = key;
+        setAlarmRinging(true);
+        setSystemMessage("Alarm ringing · focus block ready");
+        setOpenWindows((current) => ({ ...current, alarm: true }));
+        setActiveApp("alarm");
+      }
+    }, 1000);
+    return () => window.clearInterval(timer);
+  }, [alarmEnabled, alarmTime]);
+
+  useEffect(() => {
+    window.localStorage.setItem("mit-pov-alarm-time", alarmTime);
+    window.localStorage.setItem("mit-pov-alarm-enabled", String(alarmEnabled));
+    window.localStorage.setItem("mit-pov-spotify", String(spotifyConnected));
+  }, [alarmTime, alarmEnabled, spotifyConnected]);
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -255,7 +305,7 @@ function Home() {
   }, []);
 
   useEffect(() => {
-    const onPointerMove = (event: PointerEvent) => {
+    const onPointerMove = (event: globalThis.PointerEvent) => {
       const drag = dragRef.current;
       const desktop = desktopRef.current;
       if (!drag || !desktop) return;
@@ -306,7 +356,7 @@ function Home() {
     setMaximized((current) => ({ ...current, [id]: !current[id] }));
   };
 
-  const startDrag = (event: PointerEvent, id: AppId) => {
+  const startDrag = (event: ReactPointerEvent, id: AppId) => {
     if (maximized[id]) return;
 
     const windowEl = document.getElementById(`window-${id}`);
@@ -371,6 +421,23 @@ function Home() {
 
     setTerminalLines((lines) => [...lines, `guest@mit-pov:~$ ${terminalInput}`, ...output, ""]);
     setTerminalInput("");
+  };
+
+  const submitAssistant = (event?: FormEvent) => {
+    event?.preventDefault();
+    const prompt = assistantInput.trim();
+    if (!prompt) return;
+    const lower = prompt.toLowerCase();
+    const reply = lower.includes("plan")
+      ? "Let’s make it concrete: define the outcome, choose the smallest shippable step, time-box it to 25 minutes, then review what changed."
+      : lower.includes("spotify")
+        ? "Spotify is ready as a control surface. Connect OAuth for live playback; the demo player below keeps the desktop usable without credentials."
+        : lower.includes("alarm")
+          ? "Set a focus time in Alarm.exe and enable it. The browser will surface the alarm while this desktop is open."
+          : `Good signal. I’d break “${prompt}” into one question, one experiment, and one measurable next action.`;
+    setAssistantMessages((messages) => [...messages, { role: "user", text: prompt }, { role: "assistant", text: reply }]);
+    setAssistantInput("");
+    setSystemMessage("LLM Desk answered locally · API-ready");
   };
 
   const saveNotes = () => {
@@ -935,6 +1002,80 @@ function Home() {
           </WindowFrame>
 
           <WindowFrame
+            id="alarm"
+            title="Alarm.exe"
+            eyebrow="focus scheduler / local"
+            icon={AlarmClock}
+            isOpen={openWindows.alarm}
+            isMaximized={maximized.alarm}
+            position={positions.alarm}
+            zIndex={stackLevel + 3}
+            onClose={closeApp}
+            onMaximize={toggleMaximize}
+            onBringToFront={bringToFront}
+            onPointerDown={startDrag}
+          >
+            <div className="feature-intro">
+              <div><span className="micro-label">FOCUS SCHEDULER</span><strong>{alarmRinging ? "WAKE UP." : "PROTECT THE SIGNAL."}</strong></div>
+              <span className={`feature-led ${alarmEnabled ? "on" : ""}`} />
+            </div>
+            <div className={`alarm-display ${alarmRinging ? "ringing" : ""}`}>
+              <span className="micro-label">NEXT LOCAL ALARM</span>
+              <strong>{alarmTime}</strong>
+              <span>{alarmRinging ? "focus block is ready" : alarmEnabled ? "armed · browser session" : "standby · not armed"}</span>
+            </div>
+            <div className="alarm-controls">
+              <label>TIME<input type="time" value={alarmTime} onChange={(event) => setAlarmTime(event.target.value)} /></label>
+              <button className="refresh-button" onClick={() => { setAlarmEnabled((enabled) => !enabled); setSystemMessage(alarmEnabled ? "Alarm disarmed" : "Alarm armed locally"); }}>{alarmEnabled ? "disarm" : "arm alarm"}</button>
+            </div>
+            {alarmRinging && <button className="primary-action small" onClick={() => { setAlarmRinging(false); setAlarmEnabled(false); setSystemMessage("Alarm dismissed · nice work"); }}><Check size={14} /> dismiss</button>}
+            <p className="feature-note">Works while this desktop is open. A native notification or mobile push can be added when the app gets a persistent backend.</p>
+          </WindowFrame>
+
+          <WindowFrame
+            id="spotify"
+            title="Spotify.exe"
+            eyebrow="music control / OAuth-ready"
+            icon={Music2}
+            isOpen={openWindows.spotify}
+            isMaximized={maximized.spotify}
+            position={positions.spotify}
+            zIndex={stackLevel + 2}
+            onClose={closeApp}
+            onMaximize={toggleMaximize}
+            onBringToFront={bringToFront}
+            onPointerDown={startDrag}
+          >
+            <div className="feature-intro"><div><span className="micro-label">NOW PLAYING / DEMO MIX</span><strong>Deep Work FM</strong></div><span className="spotify-mark">●</span></div>
+            <div className="track-card"><div className="album-art"><Music2 size={28} /></div><div><strong>Midnight City</strong><span>M83 · Hurry Up, We're Dreaming</span><small>{spotifyConnected ? "connected account" : "demo playback"}</small></div></div>
+            <div className="player-controls"><button aria-label="Previous track">◀◀</button><button className="play-button" onClick={() => setSpotifyPlaying((playing) => !playing)}>{spotifyPlaying ? <Pause size={16} /> : <Play size={16} />}</button><button aria-label="Next track">▶▶</button></div>
+            <div className="spotify-progress"><span style={{ width: spotifyPlaying ? "48%" : "18%" }} /></div>
+            <div className="spotify-connect-row"><span><span className={`mini-led ${spotifyConnected ? "green" : ""}`} />{spotifyConnected ? "Spotify connected" : "Demo mode"}</span><button className="refresh-button" onClick={() => { setSpotifyConnected((connected) => !connected); setSystemMessage(spotifyConnected ? "Spotify disconnected · demo retained" : "Spotify connected in demo mode · OAuth hook ready"); }}>{spotifyConnected ? "disconnect" : "connect account"}</button></div>
+            <p className="feature-note">Live playback needs a Spotify Developer Client ID, redirect URI, and OAuth callback on the server. This UI is safe to ship before those secrets exist.</p>
+          </WindowFrame>
+
+          <WindowFrame
+            id="assistant"
+            title="LLM Desk.exe"
+            eyebrow="thinking partner / local fallback"
+            icon={Bot}
+            isOpen={openWindows.assistant}
+            isMaximized={maximized.assistant}
+            position={positions.assistant}
+            zIndex={stackLevel + 4}
+            onClose={closeApp}
+            onMaximize={toggleMaximize}
+            onBringToFront={bringToFront}
+            onPointerDown={startDrag}
+          >
+            <div className="feature-intro"><div><span className="micro-label">CONTEXT WINDOW / 4K</span><strong>Ask better questions.</strong></div><span className="assistant-status">ready</span></div>
+            <div className="assistant-thread">{assistantMessages.map((message, index) => <div className={`assistant-message ${message.role}`} key={`${message.role}-${index}`}><span>{message.role === "assistant" ? <Bot size={13} /> : <MessageCircle size={13} />}</span><p>{message.text}</p></div>)}</div>
+            <form className="assistant-form" onSubmit={submitAssistant}><input value={assistantInput} onChange={(event) => setAssistantInput(event.target.value)} placeholder="Ask about a project, course, or idea..." aria-label="Ask LLM Desk" /><button aria-label="Send message"><Send size={14} /></button></form>
+            <div className="assistant-prompts"><button onClick={() => setAssistantInput("Plan my next focus block")}>plan focus</button><button onClick={() => setAssistantInput("Explain this idea")}>explain idea</button><button onClick={() => setAssistantInput("Turn this into next steps")}>next steps</button></div>
+            <p className="feature-note">Local responses are enabled now. For production, route requests through the server and store the model key in an environment variable — never in the browser.</p>
+          </WindowFrame>
+
+          <WindowFrame
             id="orbital"
             title="Orbital Brief.exe"
             eyebrow="NASA live feed / APOD"
@@ -1235,7 +1376,7 @@ type WindowFrameProps = {
   onClose: (id: AppId) => void;
   onMaximize: (id: AppId) => void;
   onBringToFront: (id: AppId) => void;
-  onPointerDown: (event: PointerEvent, id: AppId) => void;
+  onPointerDown: (event: ReactPointerEvent, id: AppId) => void;
 };
 
 function WindowFrame({
