@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { CSSProperties, FormEvent, PointerEvent as ReactPointerEvent, ReactNode } from "react";
+import WorkflowDiagram from "../components/WorkflowDiagram";
 import {
   Activity,
   AlarmClock,
@@ -555,6 +556,8 @@ function Home() {
             <div className="orbit-line line-c" />
           </div>
         </section>
+
+        <WorkflowDiagram onFinalize={() => setEntered(true)} />
 
         <footer className="welcome-footer">
           <span>DESIGNED FOR FOCUS</span>
