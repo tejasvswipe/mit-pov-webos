@@ -495,6 +495,9 @@ function Home() {
             </p>
 
             <div className="welcome-actions">
+              <button className="welcome-click-label" onClick={() => setEntered(true)}>
+                CLICK HERE
+              </button>
               <button className="primary-action" onClick={() => setEntered(true)}>
                 Initialize desktop <ChevronRight size={17} />
               </button>
