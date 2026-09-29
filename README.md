@@ -1,9 +1,10 @@
 # mit-pov
 
-we doesnt sucks
- A desktop OS from the perspective of an MIT topper, featuring draggable windows, a top-bar clock, and interactive apps (`transcript.exe`, `trophy case.exe`, `terminal.exe`, and `projects.exe`) built as a real React/TypeScript app.
+we don't sucks
 
-[🖥️ Try it live →](https://mit-pov-webos.vercel.app?utm_source=gemini)
+A desktop OS from the perspective of an MIT topper, featuring draggable windows, a top-bar clock, and interactive apps (`transcript.exe`, `trophy case.exe`, `terminal.exe`, and `projects.exe`) built as a real React/TypeScript app.
+
+[ Try it ](https://mit-pov-webos.vercel.app)
 
 ## Preview
 <img width="957" height="422" alt="Screenshot 2026-09-23 023655" src="https://github.com/user-attachments/assets/4e54c20b-731c-467f-a67a-cf5fb85472a5" />
@@ -12,6 +13,13 @@ we doesnt sucks
 
 No installation required! Just visit [mit-pov-webos.vercel.app](https://mit-pov-webos.vercel.app?utm_source=gemini).
  commit -m " i want good stardust due to my robot building  (a rizzy  robot irl ) project "
+##new-features 
+
+spotify.exe -- extreme productivity 
+
+alarm.exe --a cool gadget in the webOs
+llm support.exe -- with a gemini support u got llm help ;a bit slow
+
 ## Features
 
 * **Desktop shell:** Custom wallpaper, live clock on the top bar, and desktop app icons.
@@ -88,6 +96,6 @@ mit-pov-webos/
 
 ## Credits & Inspiration
 
-* Window manager concept inspired by the [WebOS Builder](https://jams.hackclub.com/batch/webOS?utm_source=gemini) project created during Hack Club's webOS Jams by SerenityUX. 
+* Window manager concept inspired by the [WebOS Builder](https://jams.hackclub.com/batch/webOS) project created during Hack Club's webOS Jams by SerenityUX. 
 
-* UI components built with [shadcn/ui](https://ui.shadcn.com?utm_source=gemini).
+* UI components built with [shadcn/ui](https://ui.shadcn.com).
