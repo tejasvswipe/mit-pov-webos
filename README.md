@@ -8,6 +8,10 @@ A desktop OS from the perspective of an MIT topper and with featuring draggable 
 
 ## Preview
 
+
+<img width="957" height="422" alt="Screenshot 2026-09-23 023655" src="https://github.com/user-attachments/assets/4e54c20b-731c-467f-a67a-cf5fb85472a5" />
+
+
 ## Quick Start
 
 No installation required! Just visit [mit-pov-webos.vercel.app](https://mit-pov-webos.vercel.app).
