@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { CSSProperties, FormEvent, PointerEvent as ReactPointerEvent, ReactNode } from "react";
-import WorkflowDiagram from "../components/WorkflowDiagram";
+import WorkflowDiagram from "./WorkflowDiagram";
 import {
   Activity,
   AlarmClock,
@@ -136,25 +136,25 @@ const courseInfo: Record<string, { title: string; accent: string; description: s
   systems: {
     title: "Systems & architecture",
     accent: "blue",
-    description: "The branch where abstractions meet silicon: operating systems, distributed services, networks, and trade-offs with receipts.",
+    description: "The place where abstractions meet silicon: operating systems, networks, distributed services, and the trade-offs that make systems work.",
     tags: ["OS", "NETWORKS", "DISTRIBUTED"],
   },
   "6.033": {
     title: "6.033 / Computer Systems Engineering",
     accent: "blue",
-    description: "Build systems that survive real users, real failure, and real time. The favorite branch of this desktop.",
+    description: "Build systems that hold up when real people use them and things go wrong. This is the branch this desktop keeps coming back to.",
     tags: ["RELIABILITY", "SECURITY", "DESIGN"],
   },
   "6.004": {
     title: "6.004 / Computation Structures",
     accent: "blue",
-    description: "From Boolean logic to processors: understand the machine all the way down to the voltage.",
+    description: "From Boolean logic to processors: a closer look at what the machine is doing underneath.",
     tags: ["DIGITAL", "CPU", "HARDWARE"],
   },
   ai: {
     title: "AI & intelligence",
     accent: "lime",
-    description: "The branch that asks how machines can represent, infer, and act — with a human-sized sense of wonder.",
+    description: "A branch about how machines represent, infer, and act — while keeping the human questions in view.",
     tags: ["LEARNING", "SEARCH", "AGENTS"],
   },
   "6.034": {
@@ -166,7 +166,7 @@ const courseInfo: Record<string, { title: string; accent: string; description: s
   "6.100": {
     title: "6.100 / Introduction to Programming",
     accent: "lime",
-    description: "The first spark: variables, functions, recursion, and the confidence to make the computer do a tiny dance.",
+    description: "The first spark: variables, functions, recursion, and the confidence to make a computer do something useful.",
     tags: ["PYTHON", "RECURSION", "BUILD"],
   },
 };
@@ -435,7 +435,7 @@ function Home() {
         ? "Spotify is ready as a control surface. Connect OAuth for live playback; the demo player below keeps the desktop usable without credentials."
         : lower.includes("alarm")
           ? "Set a focus time in Alarm.exe and enable it. The browser will surface the alarm while this desktop is open."
-          : `Good signal. I’d break “${prompt}” into one question, one experiment, and one measurable next action.`;
+          : `That’s a good place to start. I’d break “${prompt}” into one question, one experiment, and one measurable next action.`;
     setAssistantMessages((messages) => [...messages, { role: "user", text: prompt }, { role: "assistant", text: reply }]);
     setAssistantInput("");
     setSystemMessage("LLM Desk answered locally · API-ready");
@@ -484,7 +484,7 @@ function Home() {
           <div className="welcome-copy">
             <div className="eyebrow">
               <span className="pulse-dot" />
-              private portfolio instance · authorized visitor
+              personal portfolio · welcome in
             </div>
             <h1>
               Welcome to
@@ -492,7 +492,7 @@ function Home() {
               <em>MIT POV OS</em>
             </h1>
             <p className="welcome-lede">
-              A sharp, quiet workstation for the work behind the wins — built from the point of view of an MIT systems builder.
+              A small, quiet workspace for the projects, questions, and lessons behind the work.
             </p>
 
             <div className="welcome-actions">
@@ -511,15 +511,15 @@ function Home() {
             <div className="welcome-meta">
               <span>
                 <ShieldCheck size={14} />
-                verified profile
+                a real point of view
               </span>
               <span>
                 <Wifi size={14} />
-                offline-first shell
+                works without a login
               </span>
               <span>
                 <Zap size={14} />
-                zero filler
+                just the good parts
               </span>
             </div>
           </div>
@@ -615,7 +615,7 @@ function Home() {
             <br />
             feel obvious.
           </h2>
-          <p>SELECT A MODULE TO INSPECT THE WORK.</p>
+          <p>OPEN A MODULE TO SEE THE WORK UP CLOSE.</p>
         </div>
 
         <div className="desktop-metrics">
@@ -672,7 +672,7 @@ function Home() {
           <div className="sidebar-tip">
             <Sparkles size={14} />
             <span>
-              double-click to launch
+              double-click an app to open it
               <br />
               <b>⌘ K</b> command palette
             </span>
@@ -781,9 +781,9 @@ function Home() {
                 <strong>97.4</strong>
               </div>
               <p>
-                Not a collection of trophies.
+                These are more than trophies.
                 <br />
-                A trail of difficult problems solved.
+                They are a trail of hard problems, curious questions, and things that made it out into the world.
               </p>
             </div>
 
@@ -803,7 +803,7 @@ function Home() {
 
             <div className="window-note">
               <Award size={14} />
-              <span>Each outcome started as a question worth staying up for.</span>
+              <span>Every one of these started with a question that was worth following.</span>
             </div>
           </WindowFrame>
 
@@ -874,7 +874,7 @@ function Home() {
               </div>
               <span className="ocw-sticker">
                 <Star size={12} fill="currentColor" />
-                cute but rigorous
+                friendly, but rigorous
               </span>
             </div>
 
@@ -1074,7 +1074,7 @@ function Home() {
             onBringToFront={bringToFront}
             onPointerDown={startDrag}
           >
-            <div className="feature-intro"><div><span className="micro-label">CONTEXT WINDOW / 4K</span><strong>Ask better questions.</strong></div><span className="assistant-status">ready</span></div>
+            <div className="feature-intro"><div><span className="micro-label">CONTEXT WINDOW / 4K</span><strong>Let’s think it through.</strong></div><span className="assistant-status">ready</span></div>
             <div className="assistant-thread">{assistantMessages.map((message, index) => <div className={`assistant-message ${message.role}`} key={`${message.role}-${index}`}><span>{message.role === "assistant" ? <Bot size={13} /> : <MessageCircle size={13} />}</span><p>{message.text}</p></div>)}</div>
             <form className="assistant-form" onSubmit={submitAssistant}><input value={assistantInput} onChange={(event) => setAssistantInput(event.target.value)} placeholder="Ask about a project, course, or idea..." aria-label="Ask LLM Desk" /><button aria-label="Send message"><Send size={14} /></button></form>
             <div className="assistant-prompts"><button onClick={() => setAssistantInput("Plan my next focus block")}>plan focus</button><button onClick={() => setAssistantInput("Explain this idea")}>explain idea</button><button onClick={() => setAssistantInput("Turn this into next steps")}>next steps</button></div>
@@ -1144,9 +1144,9 @@ function Home() {
             ) : (
               <div className="apod-empty">
                 <Rocket size={26} />
-                <strong>Mission control is standing by.</strong>
+                <strong>The feed is ready when you are.</strong>
                 <p>
-                  Pull NASA's public APOD feed into this workspace. No key is required for a first look; a personal key improves rate limits.
+                  Bring NASA's public Astronomy Picture of the Day into this workspace. You can try it without a key; a personal key simply gives you more requests.
                 </p>
                 <button className="primary-action small" onClick={fetchApod}>
                   <Radar size={15} />
