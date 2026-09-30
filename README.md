@@ -1,17 +1,17 @@
 # mit-pov
 
-we don't sucks
+### we don't sucks
 
-A desktop OS from the perspective of an MIT topper, featuring draggable windows, a top-bar clock, and interactive apps (`transcript.exe`, `trophy case.exe`, `terminal.exe`, and `projects.exe`) built as a real React/TypeScript app.
+A desktop OS from the perspective of an MIT topper and with featuring draggable windows, a top-bar clock and interactive apps (`transcript.exe`, `trophy case.exe`, `terminal.exe`, and `projects.exe`) built as a real React/TypeScript app. yepieeee!!!!
 
-[ Try it ](https://mit-pov-webos.vercel.app)
+[Try it](https://mit-pov-webos.vercel.app)
 
 ## Preview
 <img width="957" height="422" alt="Screenshot 2026-09-23 023655" src="https://github.com/user-attachments/assets/4e54c20b-731c-467f-a67a-cf5fb85472a5" />
 
 ## Quick Start
 
-No installation required! Just visit [mit-pov-webos.vercel.app](https://mit-pov-webos.vercel.app?utm_source=gemini).
+No installation required! Just visit [mit-pov-webos.vercel.app](https://mit-pov-webos.vercel.app).
  commit -m " i want good stardust due to my robot building  (a rizzy  robot irl ) project "
 ##new-features 
 
@@ -20,9 +20,9 @@ spotify.exe -- extreme productivity
 alarm.exe --a cool gadget in the webOs
 llm support.exe -- with a gemini support u got llm help ;a bit slow
 
-## Features
+## Features 
 
-* **Desktop shell:** Custom wallpaper, live clock on the top bar, and desktop app icons.
+* **Desktop shell:** Custom wallpaper live clock on the top bar, and desktop app icons.
 
 * **Window manager:** Draggable, focusable, openable, and closable windows built from scratch (no magic windowing libraries!).
 
@@ -38,7 +38,7 @@ llm support.exe -- with a gemini support u got llm help ;a bit slow
 
 Instead of using the traditional approach of raw DOM element manipulation or heavy window manager libraries, I built everything directly in React. The app manages window state (open/closed, z-index focus) and drag coordinates natively.
 
-This makes adding new desktop apps super simple — you just write a standard React component and pass it into the `Window` primitive exported by this project.
+This makes adding new desktop apps super simple  you just write a standard React component and pass it into the `Window` primitive exported by this project.
 
 ## Tech Stack
 
@@ -87,10 +87,10 @@ pnpm dev
 
 ```
 mit-pov-webos/
-├── client/    # React frontend (desktop shell, apps, window components)
-├── server/    # Node.js Express server
-├── shared/    # Shared types/utilities between client and server
-└── patches/   # pnpm patch overrides
+ client/    # React frontend (desktop shell, apps, window components)
+ server/    # Node.js Express server
+ shared/    # Shared types/utilities between client and server
+ patches/   # pnpm patch overrides
 
 ```
 
